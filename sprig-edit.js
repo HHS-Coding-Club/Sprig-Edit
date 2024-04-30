@@ -208,6 +208,7 @@ var isHidden = false;           // Variable to make the press down to start blin
 var currentTextPosition = 0;    // Integer that stores the current position in the text_array.
 var currentCharacter = 0;      // Current Character Held.
 var newInterval;
+var currentLine = 0;
 
 const VERSION_MAJOR = "0";
 const VERSION_MINOR = "0";
@@ -948,9 +949,9 @@ JL.-.CHANGE.....
 ................
 W..-.NEW.LINE...
 ................
-S..-.SPACE......
+S..-.SPACE.START
 ................
-I..-.PLACE.START
+I..-.PLACE......
 ................
 K..-.DELETE.....
 ----------------`,                    // Controls
@@ -977,7 +978,86 @@ K..-.DELETE.....
   Set the current selected character for use in the text editor.
 */
 function setCharacter() {
-  
+  switch (currentCharacter) {
+    case 0:
+      currentCharacter = TEXT_A;
+      break;
+    case 1:
+      currentCharacter = TEXT_B;
+      break;
+    case 2:
+      currentCharacter = TEXT_C;
+      break;
+    case 3:
+      currentCharacter = TEXT_D;
+      break;
+    case 4:
+      currentCharacter = TEXT_E;
+      break;
+    case 5:
+      currentCharacter = TEXT_F;
+      break;
+    case 6:
+      currentCharacter = TEXT_G;
+      break;
+    case 7:
+      currentCharacter = TEXT_H;
+      break;
+    case 8:
+      currentCharacter = TEXT_I;
+      break;
+    case 9:
+      currentCharacter = TEXT_J;
+      break;
+    case 10:
+      currentCharacter = TEXT_K;
+      break;
+    case 11:
+      currentCharacter = TEXT_L;
+      break;
+    case 12:
+      currentCharacter = TEXT_M;
+      break;
+    case 13:
+      currentCharacter = TEXT_N;
+      break;
+    case 14:
+      currentCharacter = TEXT_O;
+      break;
+    case 15:
+      currentCharacter = TEXT_P;
+      break;
+    case 16:
+      currentCharacter = TEXT_Q;
+      break;
+    case 17:
+      currentCharacter = TEXT_R;
+      break;
+    case 18:
+      currentCharacter = TEXT_S;
+      break;
+    case 19:
+      currentCharacter = TEXT_T;
+      break;
+    case 20:
+      currentCharacter = TEXT_U;
+      break;
+    case 21:
+      currentCharacter = TEXT_V;
+      break;
+    case 22:
+      currentCharacter = TEXT_W;
+      break;
+    case 23:
+      currentCharacter = TEXT_X;
+      break;
+    case 24:
+      currentCharacter = TEXT_Y;
+      break;
+    case 25:
+      currentCharacter = TEXT_Z;
+      break;
+  }
 }
 
 /*
@@ -1062,6 +1142,14 @@ function updateTextLegend() {
 
 setMap(levels[level])
 
+onInput("w", () => {
+  if (currentLine == 14) {
+    currentLine = 0;
+  } else {
+    currentLine++;
+  }
+});
+      
 onInput("j", () => {
   if (currentCharacter == 0) {
     currentCharacter = 39;
