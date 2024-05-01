@@ -69,8 +69,8 @@ var MATRIX_SAVE8 = Array.from({ length: 15 }, () => Array(16).fill(" "));
 var MATRIX_COLOR8 = Array.from({ length: 15 }, () => Array(16).fill(" "));
 
 const SAMPLE1 = `This is an exam\nple text. You ca\nn load it into S\nprig-Edit and st\nart editing righ\nt away.`;
-const SAMPLE2 = `Hello world! This is a sample text. You can use it for testing.`;
-const SAMPLE3 = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`;
+const SAMPLE2 = `Hello world! Thi\ns is a sample te\nxt. You can use\n it for testing.`;
+const SAMPLE3 = `Lorem ipsum dolo\nr sit amet, cons\nectetur adipisci\nng elit. Sed do\n eiusmod tempor\n incididunt ut l\nabore et dolore\n magna aliqua.`;
 const SAMPLE4 = `Welcome to Sprig-Edit! Create amazing texts with ease. Enjoy the creative process!`;
 const SAMPLE5 = `Thanks for using Sprig-Edit!`;
 const SAMPLE6 = `Programming is fun! Let's write some code. Sprig-Edit makes it easy.`;
@@ -436,6 +436,7 @@ function handleInput(input) {
           break;
         case 6:
           matrix = stringToMatrix(SAMPLE1);
+          resetColorMatrix();
           currentScreen = 2;
           break;
       }
@@ -453,6 +454,11 @@ function handleInput(input) {
           } else {
             MATRIX_X--;
           }
+          break;
+        case 6:
+          matrix = stringToMatrix(SAMPLE2);
+          resetColorMatrix();
+          currentScreen = 2;
           break;
       }
       break;
@@ -478,7 +484,22 @@ function handleInput(input) {
         case 4:
           currentScreen = 1;
           break;
+        case 6:
+          matrix = stringToMatrix(SAMPLE3);
+          resetColorMatrix();
+          currentScreen = 2;
+          break;
       }
+      break;
+    case "d":
+      break;
+    case "i":
+      break;
+    case "j":
+      break;
+    case "k":
+      break;
+    case "l":
       break;
   }
 }
@@ -501,6 +522,10 @@ function stringToMatrix(text) {
   }
 
   return matrix;
+}
+
+function resetColorMatrix() {
+  colorMatrix = Array.from({ length: 15 }, () => Array(16).fill(color`2`));
 }
 
 onInput("w", () => {
