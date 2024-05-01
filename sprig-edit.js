@@ -204,6 +204,23 @@ const levels = [
 ................
 ................
 ................`,
+  map`
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................`,
 ];
 
 function changeCharacter() {
@@ -261,138 +278,33 @@ function createScreens(screen) {
 
       clearText();
 
-      addText("Sprig Edit", {
-        x: 5,
-        y: 0,
-        color: color`2`,
-      });
-
-      addText("----------------", {
-        x: 2,
-        y: 1,
-        color: color`2`,
-      });
-
-      addText(
-        `v${SPRIG_EDIT.VERSION.MAJOR}.${SPRIG_EDIT.VERSION.MINOR}.${SPRIG_EDIT.VERSION.PATCH}`,
-        {
-          x: 7,
-          y: 4,
-          color: color`2`,
-        },
-      );
-
-      addText("Press S To", {
-        x: 5,
-        y: 7,
-        color: color`2`,
-      });
-
-      addText("Start", {
-        x: 8,
-        y: 9,
-        color: color`2`,
-      });
-
-      addText("Colack 2024", {
-        x: 2,
-        y: 15,
-        color: color`2`,
-      });
+      addText("Sprig Edit", {x: 5,y: 0,color: color`2`,});
+      addText("----------------", {x: 2,y: 1,color: color`2`,});
+      addText(`v${SPRIG_EDIT.VERSION.MAJOR}.${SPRIG_EDIT.VERSION.MINOR}.${SPRIG_EDIT.VERSION.PATCH}`,{x: 7,y: 4,color: color`2`,});
+      addText("Press S To", {x: 5,y: 7,color: color`2`,});
+      addText("Start", {x: 8,y: 9,color: color`2`,});
+      addText("Colack 2024", {x: 2,y: 15,color: color`2`});
 
       break;
     case 1:
       clearText();
 
-      addText("Controls", {
-        x: 6,
-        y: 0,
-        color: color`2`,
-      });
-
-      addText("----------------", {
-        x: 2,
-        y: 1,
-        color: color`2`,
-      });
-
-      addText("AD - Move Cursor", {
-        x: 2,
-        y: 2,
-        color: color`2`,
-      });
-
-      addText("JL - Change Char", {
-        x: 2,
-        y: 3,
-        color: color`2`,
-      });
-
-      addText("I  - Place Char", {
-        x: 2,
-        y: 4,
-        color: color`2`,
-      });
-
-      addText("K  - Remove Char", {
-        x: 2,
-        y: 5,
-        color: color`2`,
-      });
-
-      addText("S  - Space", {
-        x: 2,
-        y: 6,
-        color: color`2`,
-      });
-
-      addText("W  -", {
-        x: 2,
-        y: 7,
-        color: color`2`,
-      });
-
-      addText("C", {
-        x: 7,
-        y: 7,
-        color: color`3`,
-      });
-
-      addText("o", {
-        x: 8,
-        y: 7,
-        color: color`9`,
-      });
-
-      addText("l", {
-        x: 9,
-        y: 7,
-        color: color`6`,
-      });
-
-      addText("o", {
-        x: 10,
-        y: 7,
-        color: color`D`,
-      });
-
-      addText("r", {
-        x: 11,
-        y: 7,
-        color: color`5`,
-      });
-
-      addText("s", {
-        x: 12,
-        y: 7,
-        color: color`H`,
-      });
-
-      addText("Press S to Start", {
-        x: 2,
-        y: 9,
-        color: color`2`,
-      });
+      addText("Controls", {x: 6,y: 0,color: color`2`,});
+      addText("----------------", {x: 2,y: 1,color: color`2`,});
+      addText("AD - Move Cursor", {x: 2,y: 2,color: color`2`,});
+      addText("JL - Change Char", {x: 2,y: 3,color: color`2`,});
+      addText("I  - Place Char", {x: 2,y: 4,color: color`2`,});
+      addText("K  - Remove Char", {x: 2,y: 5,color: color`2`,});
+      addText("S  - Space", {x: 2,y: 6,color: color`2`,});
+      addText("W  -", {x: 2,y: 7,color: color`2`,});
+      addText("C", {x: 7,y: 7,color: color`3`,});
+      addText("o", {x: 8,y: 7,color: color`9`,});
+      addText("l", {x: 9,y: 7,color: color`6`,});
+      addText("o", {x: 10,y: 7,color: color`D`,});
+      addText("r", {x: 11,y: 7,color: color`5`,});
+      addText("s", {x: 12,y: 7,color: color`H`,});
+      addText("Press S to Start", {x: 2,y: 9,color: color`2`,});
+      addText("Press W for cred", {x: 2, y:11,color:color`2`});
 
       break;
     case 2:
@@ -413,6 +325,22 @@ function createScreens(screen) {
       addText(`${MATRIX_X}`, { x: 10, y: 15, color: color`2` });
       addText(`${MATRIX_Y}`, { x: 13, y: 15, color: color`2` });
       break;
+    case 3:
+      clearText();
+      
+      addText("Credits", {x: 6,y: 0,color: color`2`,});
+      addText("----------------", {x: 2,y: 1,color: color`2`,});
+      addText("By: Jack S.", {x: 2, y: 3,color: color`2`});
+      addText("Testers:", {x:2,y:5, color:color`2`});
+      addText("   Joe",{x:2,y:6,color:color`2`});
+      addText("   Nat",{x:2,y:7,color:color`2`});
+      addText("   Trent",{x:2,y:8,color:color`2`});
+      addText("   Jared",{x:2,y:9,color:color`2`});
+      addText("   Phin",{x:2,y:10,color:color`2`});
+      addText("Thanks for using",{x:2,y:14,color:color`2`});
+      addText("Sprig Edit",{x:5,y:15,color:color`2`});
+      
+      break;
   }
 }
 
@@ -430,6 +358,10 @@ onInput("w", () => {
       currentColor++;
     }
     changeTextColor();
+  } else if (level == 1) {
+    level = 3;
+    setMap(levels[level]);
+    createScreens(level);
   }
 });
 
