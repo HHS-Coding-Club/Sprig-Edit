@@ -17,6 +17,20 @@ K - Delete Character
 S - Space
 */
 
+/*
+  TODO:
+    - Better explanation on how the controls work.
+    - Individual text colors (will require a seperate matrix.)
+    - Text Examples
+    - Better UI
+    - Logo
+    - Text Saving System (Won't be stored after the game ends.)
+    - Text Loading System
+    - Text Display Mode
+    - Sound Effects
+    - Soundtrack
+*/
+
 const player = "p";
 
 var matrix = Array.from({ length: 15 }, () => Array(16).fill(" "));
