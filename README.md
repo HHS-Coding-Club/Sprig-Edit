@@ -15,7 +15,7 @@ Sprig-Edit has several features that are either currently in development or are 
 - [ ] Customizable editor controls
 - [ ] File Exporting
 - [ ] addText replaced with createText
-- [ ] Editor rendering put into its own function
+- [X] Editor rendering put into its own function
 - [ ] New version of quill pixel art
 - [ ] Numbers and arrows in editor
 - [X] Editor displays X0 Y0 instead of just 0 0
