@@ -322,15 +322,7 @@ function createScreens(screen) {
 
       break;
     case 2: // Editor
-      for (let y = 0; y < 15; y++) {
-        for (let x = 0; x < 16; x++) {
-          if (x === MATRIX_X && y === MATRIX_Y) {
-            addText("/", { x: x + 2, y, color: textColor });
-          } else {
-            addText(matrix[y][x], { x: x + 2, y, color: colorMatrix[y][x] });
-          }
-        }
-      }
+      loadMatrix();
 
       addText("Color", { x: 2, y: 15, color: textColor });
       addText(currentHeldCharacter, { x: 8, y: 15, color: color`2` });
@@ -469,6 +461,18 @@ function createScreens(screen) {
 function createMenuTitle(x, text) {
   addText(text, { x: x, y: 0, color: color`2` });
   addText("----------------", { x: 2, y: 1, color: color`2`, });
+}
+
+function loadMatrix() {
+  for (let y = 0; y < 15; y++) {
+      for (let x = 0; x < 16; x++) {
+        if (x === MATRIX_X && y === MATRIX_Y) {
+          addText("/", { x: x + 2, y, color: textColor });
+        } else {
+          addText(matrix[y][x], { x: x + 2, y, color: colorMatrix[y][x] });
+        }
+      }
+    }
 }
 
 function handleInput(input) {
