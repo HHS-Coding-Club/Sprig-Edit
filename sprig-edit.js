@@ -17,41 +17,20 @@ K - Delete Character
 S - Space
 */
 
-/*
-  TODO:
-    - Better explanation on how the controls work.
-    - Better UI
-    - Text Saving System (Won't be stored after the game ends.)
-    - Text Loading System
-    - Text Display Mode
-    - Sound Effects
-    - Soundtrack
-*/
-
-/*
-  Levels
-  0 - Title Screen
-  1 - Controls
-  2 - Editor
-  3 - Credits
-  4 - Changelog
-  5 - Menu
-*/
-
 const player = "p";
 
 var matrix = Array.from({ length: 15 }, () => Array(16).fill(" "));
 var colorMatrix = Array.from({ length: 15 }, () => Array(16).fill(" "));
 
 var MATRIX_SAVES = [
-  Array.from({ length: 15 }, () => Array(16).fill(" ")),
-  Array.from({ length: 15 }, () => Array(16).fill(" ")),
-  Array.from({ length: 15 }, () => Array(16).fill(" ")),
-  Array.from({ length: 15 }, () => Array(16).fill(" ")),
-  Array.from({ length: 15 }, () => Array(16).fill(" ")),
-  Array.from({ length: 15 }, () => Array(16).fill(" ")),
-  Array.from({ length: 15 }, () => Array(16).fill(" ")),
-  Array.from({ length: 15 }, () => Array(16).fill(" "))
+  ``,
+  ``,
+  ``,
+  ``,
+  ``,
+  ``,
+  ``,
+  ``
 ];
 
 var MATRIX_COLOR = [
@@ -100,7 +79,7 @@ const SPRIG_EDIT = {
   VERSION: {
     MAJOR: 0,
     MINOR: 2,
-    PATCH: 0,
+    PATCH: 1,
   },
   VERSION_NAME: "Reborn"
 };
@@ -384,8 +363,9 @@ function createScreens(screen) {
       addText("- Fixed Controls", { x: 2, y: 11, color: color`2` });
 
       break;
-    case 5: // Menu
+    case 5: // Controls
       createMenuTitle(6, "Controls");
+
       addText("AD - Move Cursor", { x: 2, y: 2, color: color`2`, });
       addText("JL - Change Char", { x: 2, y: 3, color: color`2`, });
       addText("I  - Place Char", { x: 2, y: 4, color: color`2`, });
@@ -398,6 +378,9 @@ function createScreens(screen) {
       addText("o", { x: 10, y: 7, color: color`D`, });
       addText("r", { x: 11, y: 7, color: color`5`, });
       addText("s", { x: 12, y: 7, color: color`H`, });
+      addText("To save, go to", { x: 2, y: 9, color: color`2` });
+      addText("the last line", { x: 2, y: 10, color: color`2` });
+      addText("and press S!", { x: 2, y: 11, color: color`2` });
 
       break;
     case 6: // Examples
@@ -466,6 +449,20 @@ function createScreens(screen) {
       addText("L - Slot 8", { x: 2, y: 10, color:color`2`});
 
       break;
+    case 10:
+      createMenuTitle(8, "Load");
+
+      addText("W - Slot 1", { x: 2, y: 2, color:color`2`});
+      addText("A - Slot 2", { x: 2, y: 3, color:color`2`});
+      addText("S - Slot 3", { x: 2, y: 4, color:color`2`});
+      addText("D - Slot 4", { x: 2, y: 5, color:color`2`});
+
+      addText("I - Slot 5", { x: 2, y: 7, color:color`2`});
+      addText("J - Slot 6", { x: 2, y: 8, color:color`2`});
+      addText("K - Slot 7", { x: 2, y: 9, color:color`2`});
+      addText("L - Slot 8", { x: 2, y: 10, color:color`2`});
+
+      break;
   }
 }
 
@@ -496,6 +493,15 @@ function handleInput(input) {
           break;
         case 8:
           matrix = stringToMatrix(SAMPLES[0]);
+          resetColorMatrix();
+          currentScreen = 2;
+          break;
+        case 9:
+          MATRIX_SAVES[0] = matrixToString(matrix);
+          currentScreen = 1;
+          break;
+        case 10:
+          matrix = stringToMatrix(MATRIX_SAVES[0]);
           resetColorMatrix();
           currentScreen = 2;
           break;
@@ -551,6 +557,7 @@ function handleInput(input) {
           break;
         case 3:
         case 4:
+        case 5:
         case 7:
           currentScreen = 1;
           break;
@@ -617,6 +624,9 @@ function handleInput(input) {
       break;
     case "j":
       switch (currentScreen) {
+        case 1:
+          currentScreen = 5;
+          break;
         case 2:
           if (currentCharacter == 1) {
             currentCharacter = 56;
@@ -656,6 +666,9 @@ function handleInput(input) {
       break;
     case "l":
       switch (currentScreen) {
+        case 1:
+          currentScreen = 10;
+          break;
         case 2:
           if (currentCharacter == 56) {
             currentCharacter = 1;
