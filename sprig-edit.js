@@ -334,8 +334,8 @@ function createScreens(screen) {
 
       addText("Color", { x: 2, y: 15, color: textColor });
       addText(currentHeldCharacter, { x: 8, y: 15, color: color`2` });
-      addText(`${MATRIX_X}`, { x: 10, y: 15, color: color`2` });
-      addText(`${MATRIX_Y}`, { x: 13, y: 15, color: color`2` });
+      addText(`X${MATRIX_X}`, { x: 10, y: 15, color: color`2` });
+      addText(`Y${MATRIX_Y}`, { x: 14, y: 15, color: color`2` });
       break;
     case 3: // Credits
       createMenuTitle(6, "Credits");
@@ -710,6 +710,11 @@ function stringToMatrix(text) {
   }
 
   return matrix;
+}
+
+function resetMatrixPositions() {
+  MATRIX_X = 0;
+  MATRIX_Y = 0;
 }
 
 function resetColorMatrix() {
