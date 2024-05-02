@@ -10,7 +10,7 @@ Sprig-Edit has several features that are either currently in development or are 
 
 - [ ] File Saving
 - [ ] File Loading
-- [ ] Matrix X/Y reset
+- [X] Matrix X/Y reset
 - [ ] Customizable background colors
 - [ ] Customizable editor controls
 - [ ] File Exporting
@@ -18,6 +18,6 @@ Sprig-Edit has several features that are either currently in development or are 
 - [ ] Editor rendering put into its own function
 - [ ] New version of quill pixel art
 - [ ] Numbers and arrows in editor
-- [ ] Editor displays X0 Y0 instead of just 0 0
+- [X] Editor displays X0 Y0 instead of just 0 0
 
 Features will be added to this list and checked when they are finished.
