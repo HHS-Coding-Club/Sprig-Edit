@@ -1,4 +1,4 @@
-# Sprig-Edit 0.2.1
+# Sprig-Edit 0.2.2
 
 Introducing Sprig-Edit, a simple text editor for Sprig. Sprig-Edit supports 56 different characters, and also supports color. It uses a 16x15 grid to create words and sentences.
 
@@ -8,16 +8,14 @@ Sprig-Edit is still in development, and will be updated for the seeable future.
 
 Sprig-Edit has several features that are either currently in development or are planned to be included in the final release. 
 
-- [ ] File Saving
-- [ ] File Loading
+- [X] File Saving
+- [X] File Loading
 - [X] Matrix X/Y reset
 - [ ] Customizable background colors
-- [ ] Customizable editor controls
-- [ ] File Exporting
 - [ ] addText replaced with createText
 - [X] Editor rendering put into its own function
 - [ ] New version of quill pixel art
-- [ ] Numbers and arrows in editor
+- [X] Numbers in editor
 - [X] Editor displays X0 Y0 instead of just 0 0
 
 Features will be added to this list and checked when they are finished.
