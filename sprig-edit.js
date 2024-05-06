@@ -9,10 +9,11 @@ This is Sprig-Edit, a basic text editor for Sprig.
 
 Controls:
 AD - Move Cursor
-JL - Change Character
-I - Place Character
-K - Delete Character
-S - Space
+JL - Change Char
+I  - Place Char
+K  - Remove Char
+S  - Space
+W  - Change Color
 */
 
 const player = "p";
@@ -55,6 +56,8 @@ const SAMPLES = [
 ]
 
 const BACKGROUND_BLACK = "B";
+const BACKGROUND_DGREY = "D";
+const BACKGROUND_LGREY = "G";
 
 const LOGO_1 = "1";
 const LOGO_2 = "2";
@@ -77,7 +80,7 @@ const SPRIG_EDIT = {
   VERSION: {
     MAJOR: 0,
     MINOR: 2,
-    PATCH: 2,
+    PATCH: 3,
   },
   VERSION_NAME: "Phantom"
 };
@@ -102,6 +105,46 @@ setLegend(
 0000000000000000
 0000000000000000
 0000000000000000`,
+  ],
+  [
+    BACKGROUND_DGREY,
+    bitmap`
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL`,
+  ],
+  [
+    BACKGROUND_LGREY,
+    bitmap`
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111`,
   ],
   [
     LOGO_1,
@@ -328,178 +371,175 @@ function changeTextColor() {
 function createScreens(screen) {
   clearText();
   switch (screen) {
-    case 0: // Title Screen
+    case 0:
       createMenuTitle(5, "Sprig Edit");
 
-      addText(`v${SPRIG_EDIT.VERSION.MAJOR}.${SPRIG_EDIT.VERSION.MINOR}.${SPRIG_EDIT.VERSION.PATCH}`, { x: 7, y: 4, color: color`2`, });
-      addText("Press S To", { x: 5, y: 7, color: color`2`, });
-      addText("Start", { x: 8, y: 9, color: color`2`, });
-      addText("Colack 2024", { x: 2, y: 15, color: color`2` });
-
+      createText(`v${SPRIG_EDIT.VERSION.MAJOR}.${SPRIG_EDIT.VERSION.MINOR}.${SPRIG_EDIT.VERSION.PATCH}`, 7, 4, color`2`);
+      createText("Press S To", 5, 7, color`2`);
+      createText("Start", 8, 9, color`2`);
+      createText("Colack 2024", 2, 15, color`2`);
       break;
-    case 1: // Main Menu
+    case 1:
       createMenuTitle(4, "Menu Options");
 
-      addText("W - ChangeLog", { x: 2, y: 3, color: color`2` });
-      addText("A - Credits", { x: 2, y: 4, color: color`2` });
-      addText("S - Examples", { x: 2, y: 5, color: color`2` });
-      addText("D - About", { x: 2, y: 6, color: color`2` });
+      createText("W - ChangeLog", 2, 3, color`2`);
+      createText("A - Credits", 2, 4, color`2`);
+      createText("S - Examples", 2, 5, color`2`);
+      createText("D - About", 2, 6, color`2`);
 
-      addText("I - New File", { x: 2, y: 8, color: color`2` });
-      addText("J - Controls", { x: 2, y: 9, color: color`2` });
-      addText("K - Guide", { x: 2, y: 10, color: color`2` });
-      addText("L - Load File", { x: 2, y: 11, color: color`2` });
-
+      createText("I - New File", 2, 8, color`2`);
+      createText("J - Controls", 2, 9, color`2`);
+      createText("K - Customize", 2, 10, color`2`);
+      createText("L - Load File", 2, 11, color`2`);
       break;
-    case 2: // Editor
+    case 2:
       loadMatrix();
 
-      addText("Color", { x: 2, y: 15, color: textColor });
-      addText(currentHeldCharacter, { x: 8, y: 15, color: color`2` });
-      addText(`X${MATRIX_X}`, { x: 10, y: 15, color: color`2` });
-      addText(`Y${MATRIX_Y}`, { x: 14, y: 15, color: color`2` });
+      createText("Color", 2, 15, textColor);
+      createText(currentHeldCharacter, 8, 15, color`2`);
+      createText(`X${MATRIX_X}`, 10, 15, color`2`);
+      createText(`Y${MATRIX_Y}`, 14, 15, color`2`);
       break;
-    case 3: // Credits
+    case 3:
       createMenuTitle(6, "Credits");
-      addText("By: Jack S.", { x: 2, y: 3, color: color`2` });
-      addText("Testers:", { x: 2, y: 5, color: color`2` });
-      addText("- Joe", { x: 2, y: 6, color: color`2` });
-      addText("- Nat", { x: 2, y: 7, color: color`2` });
-      addText("- Trent", { x: 2, y: 8, color: color`2` });
-      addText("- Jared", { x: 2, y: 9, color: color`2` });
-      addText("- Phin", { x: 2, y: 10, color: color`2` });
-      addText("Thanks for using", { x: 2, y: 14, color: color`2` });
-      addText("Sprig Edit", { x: 5, y: 15, color: color`2` });
 
+      createText("By Jack S.", 2, 3, color`2`);
+      createText("Testers:", 2, 5, color`2`);
+      createText("- Joe", 2, 6, color`2`);
+      createText("- Nat", 2, 7, color`2`);
+      createText("- Trent", 2, 8, color`2`);
+      createText("- Jared", 2, 9, color`2`);
+      createText("- Phin", 2, 10, color`2`);
+
+      createText("Thanks for using", 2, 14, color`2`);
+      createText("Sprig Edit", 5, 15, color`2`);
       break;
-    case 4: // Changelog
+    case 4:
       createMenuTitle(5, "Change Log");
-      addText(`Sprig-Edit ${SPRIG_EDIT.VERSION.MAJOR}.${SPRIG_EDIT.VERSION.MINOR}.${SPRIG_EDIT.VERSION.PATCH}`, { x: 2, y: 2, color: color`2` });
-      addText(`${SPRIG_EDIT.VERSION_NAME} Update`, { x: 2, y: 3, color: color`2` });
-      addText("Added:", { x: 2, y: 5, color: color`2` });
-      addText("- Examples", { x: 2, y: 6, color: color`2` });
-      addText("- Saving", { x: 2, y: 7, color: color`2` });
-      addText("- Loading", { x: 2, y: 8, color: color`2` });
-      addText("- Upd. Menus", { x: 2, y: 9, color: color`2` });
-      addText("- Sprig Guide", { x: 2, y: 10, color: color`2` });
-      addText("- Fixed Controls", { x: 2, y: 11, color: color`2` });
 
+      createText(`Sprig-Edit ${SPRIG_EDIT.VERSION.MAJOR}.${SPRIG_EDIT.VERSION.MINOR}.${SPRIG_EDIT.VERSION.PATCH}`, 2, 2, color`2`);
+      createText(`${SPRIG_EDIT.VERSION_NAME} Update`, 2, 3, color`2`);
+      createText("Added:", 2, 5, color`2`);
+      createText("- TBD", 2, 6, color`2`);
       break;
-    case 5: // Controls
+    case 5:
       createMenuTitle(6, "Controls");
 
-      addText("AD - Move Cursor", { x: 2, y: 2, color: color`2`, });
-      addText("JL - Change Char", { x: 2, y: 3, color: color`2`, });
-      addText("I  - Place Char", { x: 2, y: 4, color: color`2`, });
-      addText("K  - Remove Char", { x: 2, y: 5, color: color`2`, });
-      addText("S  - Space", { x: 2, y: 6, color: color`2`, });
-      addText("W  -", { x: 2, y: 7, color: color`2`, });
-      addText("C", { x: 7, y: 7, color: color`3`, });
-      addText("o", { x: 8, y: 7, color: color`9`, });
-      addText("l", { x: 9, y: 7, color: color`6`, });
-      addText("o", { x: 10, y: 7, color: color`D`, });
-      addText("r", { x: 11, y: 7, color: color`5`, });
-      addText("s", { x: 12, y: 7, color: color`H`, });
-      addText("To save, go to", { x: 2, y: 9, color: color`2` });
-      addText("the last line", { x: 2, y: 10, color: color`2` });
-      addText("and press S!", { x: 2, y: 11, color: color`2` });
-
+      createText("AD - Move Cursor", 2, 2, color`2`);
+      createText("JL - Change Char", 2, 3, color`2`);
+      createText("I  - Place Char ", 2, 4, color`2`);
+      createText("K  - Remove Char", 2, 5, color`2`);
+      createText("S  - Space      ", 2, 6, color`2`);
+      createText("W  -", 2, 7, color`2`);
+      createText("C", 7, 7, color`3`);
+      createText("o", 8, 7, color`9`);
+      createText("l", 9, 7, color`6`);
+      createText("o", 10, 7, color`D`);
+      createText("r", 11, 7, color`5`);
+      createText("s", 12, 7, color`H`);
+      createText("To save, go to", 2, 9, color`2`);
+      createText("the last line", 2, 10, color`2`);
+      createText("and press S!", 2, 11, color`2`);
       break;
-    case 6: // Examples
+    case 6:
       createMenuTitle(6, "Examples");
 
-      addText("W - Example Text", { x: 2, y: 3, color: color`2` });
-      addText("A - Hello World!", { x: 2, y: 4, color: color`2` });
-      addText("S - Lorem ipsum", { x: 2, y: 5, color: color`2` });
-      addText("D - Welcome", { x: 2, y: 6, color: color`2` });
-
-      addText("I - Thanks", { x: 2, y: 8, color: color`2` });
-      addText("J - Program", { x: 2, y: 9, color: color`2` });
-      addText("K - Roses", { x: 2, y: 10, color: color`2` });
-      addText("L - Princess", { x: 2, y: 11, color: color`2` });
-
+      createText("W - Example Text", 2, 3, color`2`);
+      createText("A - Hello World", 2, 4, color`2`);
+      createText("S - Lorem ipsum", 2, 5, color`2`);
+      createText("D - Welcome", 2, 6, color`2`);
+      createText("I - Thanks", 2, 8, color`2`);
+      createText("J - Program", 2, 9, color`2`);
+      createText("K - Roses", 2, 10, color`2`);
+      createText("L - Princess", 2, 11, color`2`);
       break;
-    case 7: // About
+    case 7:
       createMenuTitle(8, "About");
 
-      addText("Sprig Edit, a si", { x: 2, y: 3, color: color`2` });
-      addText("mple text editor", { x: 2, y: 4, color: color`2` });
-      addText("for Sprig.", { x: 2, y: 5, color: color`2` });
-      addText("It supports 56", { x: 2, y: 7, color: color`2` });
-      addText("different charac", { x: 2, y: 8, color: color`2` });
-      addText("ters, and color.", { x: 2, y: 9, color: color`2` });
+      createText("Sprig Edit, a si", 2, 3, color`2`);
+      createText("mple text editor", 2, 4, color`2`);
+      createText("for Sprig.", 2, 5, color`2`);
+      createText("It supports 66", 2, 7, color`2`);
+      createText("different charac", 2, 8, color`2`);
+      createText("ters, and color.", 2, 9, color`2`);
 
-      addText("You can find the", { x: 2, y: 11, color: color`2` });
-      addText("code at github.c", { x: 2, y: 12, color: color`2` });
-      addText("om/colack/sprig-", { x: 2, y: 13, color: color`2` });
-      addText("edit!", { x: 2, y: 14, color: color`2` });
+      createText("You can find the", 2, 11, color`2`);
+      createText("code at github.c", 2, 12, color`2`);
+      createText("om/colack/sprig-", 2, 13, color`2`);
+      createText("edit!", 2, 14, color`2`);
       break;
     case 8:
       createMenuTitle(6, "New File");
 
-      addText("AD - Move Cursor", { x: 2, y: 2, color: color`2`, });
-      addText("JL - Change Char", { x: 2, y: 3, color: color`2`, });
-      addText("I  - Place Char", { x: 2, y: 4, color: color`2`, });
-      addText("K  - Remove Char", { x: 2, y: 5, color: color`2`, });
-      addText("S  - Space", { x: 2, y: 6, color: color`2`, });
-      addText("W  -", { x: 2, y: 7, color: color`2`, });
-      addText("C", { x: 7, y: 7, color: color`3`, });
-      addText("o", { x: 8, y: 7, color: color`9`, });
-      addText("l", { x: 9, y: 7, color: color`6`, });
-      addText("o", { x: 10, y: 7, color: color`D`, });
-      addText("r", { x: 11, y: 7, color: color`5`, });
-      addText("s", { x: 12, y: 7, color: color`H`, });
-      addText("To save, go to", { x: 2, y: 9, color: color`2` });
-      addText("the last line", { x: 2, y: 10, color: color`2` });
-      addText("and press S!", { x: 2, y: 11, color: color`2` });
-
-      addText("Press any key", { x: 2, y: 13, color: color`2` });
-      addText("to Start.", { x: 2, y: 14, color: color`2` });
-
+      createText("AD - Move Cursor", 2, 2, color`2`);
+      createText("JL - Change Char", 2, 3, color`2`);
+      createText("I  - Place Char ", 2, 4, color`2`);
+      createText("K  - Remove Char", 2, 5, color`2`);
+      createText("S  - Space      ", 2, 6, color`2`);
+      createText("W  -", 2, 7, color`2`);
+      createText("C", 7, 7, color`3`);
+      createText("o", 8, 7, color`9`);
+      createText("l", 9, 7, color`6`);
+      createText("o", 10, 7, color`D`);
+      createText("r", 11, 7, color`5`);
+      createText("s", 12, 7, color`H`);
+      createText("To save, go to", 2, 9, color`2`);
+      createText("the last line", 2, 10, color`2`);
+      createText("and press S!", 2, 11, color`2`);
+      createText("Press any key", 2, 13, color`2`);
+      createText("to Start.", 2, 14, color`2`);
       break;
     case 9:
       createMenuTitle(8, "Save");
 
-      addText("W - Slot 1", { x: 2, y: 2, color: color`2` });
-      addText("A - Slot 2", { x: 2, y: 3, color: color`2` });
-      addText("S - Slot 3", { x: 2, y: 4, color: color`2` });
-      addText("D - Slot 4", { x: 2, y: 5, color: color`2` });
+      createText("W - Slot 1", 2, 2, color`2`);
+      createText("A - Slot 2", 2, 3, color`2`);
+      createText("S - Slot 3", 2, 4, color`2`);
+      createText("D - Slot 4", 2, 5, color`2`);
 
-      addText("I - Slot 5", { x: 2, y: 7, color: color`2` });
-      addText("J - Slot 6", { x: 2, y: 8, color: color`2` });
-      addText("K - Slot 7", { x: 2, y: 9, color: color`2` });
-      addText("L - Slot 8", { x: 2, y: 10, color: color`2` });
-
+      createText("I - Slot 5", 2, 7, color`2`);
+      createText("J - Slot 6", 2, 8, color`2`);
+      createText("K - Slot 7", 2, 9, color`2`);
+      createText("L - Slot 8", 2, 10, color`2`);
       break;
     case 10:
       createMenuTitle(8, "Load");
 
-      addText("W - Slot 1", { x: 2, y: 2, color: color`2` });
-      addText("A - Slot 2", { x: 2, y: 3, color: color`2` });
-      addText("S - Slot 3", { x: 2, y: 4, color: color`2` });
-      addText("D - Slot 4", { x: 2, y: 5, color: color`2` });
+      createText("W - Slot 1", 2, 2, color`2`);
+      createText("A - Slot 2", 2, 3, color`2`);
+      createText("S - Slot 3", 2, 4, color`2`);
+      createText("D - Slot 4", 2, 5, color`2`);
 
-      addText("I - Slot 5", { x: 2, y: 7, color: color`2` });
-      addText("J - Slot 6", { x: 2, y: 8, color: color`2` });
-      addText("K - Slot 7", { x: 2, y: 9, color: color`2` });
-      addText("L - Slot 8", { x: 2, y: 10, color: color`2` });
+      createText("I - Slot 5", 2, 7, color`2`);
+      createText("J - Slot 6", 2, 8, color`2`);
+      createText("K - Slot 7", 2, 9, color`2`);
+      createText("L - Slot 8", 2, 10, color`2`);
+      break;
+    case 11:
+      createMenuTitle(6, "Customize");
 
+      createText("BkGr Color:", 2, 2, color`2`);
+      createText("W - Black", 2, 3, color`2`);
+      createText("A - Dark Grey", 2, 4, color`2`);
+      createText("S - Grey", 2, 5, color`2`);
       break;
   }
 }
 
 function createMenuTitle(x, text) {
-  addText(text, { x: x, y: 0, color: color`2` });
-  addText("----------------", { x: 2, y: 1, color: color`2`, });
+  createText(text, x, 0, color`2`);
+  createText("(==============)", 2, 1, color`2`);
 }
 
 function loadMatrix() {
   for (let y = 0; y < 15; y++) {
     for (let x = 0; x < 16; x++) {
       if (x === MATRIX_X && y === MATRIX_Y) {
-        addText("/", { x: x + 2, y, color: textColor });
+        let newX = x + 2;
+        createText("/", newX, y, textColor);
       } else {
-        addText(matrix[y][x], { x: x + 2, y, color: colorMatrix[y][x] });
+        let newX = x + 2;
+        createText(matrix[y][x], newX, y, colorMatrix[y][x]);
       }
     }
   }
@@ -538,6 +578,10 @@ function handleInput(input) {
           loadFile(0);
           currentScreen = 2;
           break;
+        case 11:
+          setBackground(BACKGROUND_BLACK);
+          currentScreen = 1;
+          break;
       }
       break;
     case "a":
@@ -572,6 +616,10 @@ function handleInput(input) {
           loadFile(1);
           currentScreen = 2;
           break;
+        case 11:
+          setBackground(BACKGROUND_DGREY);
+          currentScreen = 1;
+          break;
       }
       break;
     case "s":
@@ -600,8 +648,6 @@ function handleInput(input) {
         case 4:
         case 5:
         case 7:
-          currentScreen = 1;
-          break;
         case 6:
           matrix = stringToMatrix(SAMPLES[3]);
           resetColorMatrix();
@@ -619,6 +665,10 @@ function handleInput(input) {
         case 10:
           loadFile(2);
           currentScreen = 2;
+          break;
+        case 11:
+          setBackground(BACKGROUND_LGREY);
+          currentScreen = 1;
           break;
       }
       break;
@@ -722,6 +772,8 @@ function handleInput(input) {
       break;
     case "k":
       switch (currentScreen) {
+        case 1:
+          currentScreen = 11;
         case 2:
           matrix[MATRIX_Y][MATRIX_X] = " ";
           break;
@@ -815,7 +867,7 @@ function matrixToString(matrix) {
   for (let row of matrix) {
     result += row.join("") + "\n";
   }
-  return result.trim(); // Trim to remove trailing newline at the end
+  return result.trim();
 }
 
 function matrixToColor(colorMatrix) {
@@ -838,6 +890,10 @@ function loadFile(num) {
   colorMatrix = stringToMatrix(MATRIX_COLOR[num]);
 }
 
+function createText(text, x, y, color) {
+  addText(text, { x: x, y: y, color: color });
+}
+
 onInput("w", () => { handleInput("w"); });
 onInput("a", () => { handleInput("a"); });
 onInput("s", () => { handleInput("s"); });
@@ -852,5 +908,5 @@ setInterval(function() {
 }, 30);
 
 setBackground(BACKGROUND_BLACK);
-addText("Loading...", { x: 5, y: 8, color: color`2` });
+createText("Loading...", 5, 8, color`2`);
 setMap(levels[level]);
