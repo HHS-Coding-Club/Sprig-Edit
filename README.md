@@ -12,7 +12,7 @@ Sprig-Edit has several features that are either currently in development or are 
 - [X] File Loading
 - [X] Matrix X/Y reset
 - [X] Customizable background colors
-- [ ] addText replaced with createText
+- [x] addText replaced with createText
 - [X] Editor rendering put into its own function
 - [ ] New version of quill pixel art
 - [X] Numbers in editor
