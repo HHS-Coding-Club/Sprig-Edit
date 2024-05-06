@@ -7,8 +7,6 @@
 
 This is Sprig-Edit, a basic text editor for Sprig.
 
-Characters: a-z A-Z ! . ? , (56 Characters)
-
 Controls:
 AD - Move Cursor
 JL - Change Character
@@ -79,9 +77,9 @@ const SPRIG_EDIT = {
   VERSION: {
     MAJOR: 0,
     MINOR: 2,
-    PATCH: 1,
+    PATCH: 2,
   },
-  VERSION_NAME: "Reborn"
+  VERSION_NAME: "Phantom"
 };
 
 setLegend(
@@ -248,7 +246,7 @@ const levels = [
 ];
 
 function changeCharacter() {
-  if (currentCharacter >= 1 && currentCharacter <= 56) {
+  if (currentCharacter >= 1 && currentCharacter <= 66) {
     if (currentCharacter <= 26) {
       currentHeldCharacter = String.fromCharCode(currentCharacter + 96);
     } else if (currentCharacter <= 52) {
@@ -267,9 +265,41 @@ function changeCharacter() {
         case 56:
           currentHeldCharacter = ",";
           break;
+        case 57:
+          currentHeldCharacter = "0";
+          break;
+        case 58:
+          currentHeldCharacter = "1";
+          break;
+        case 59:
+          currentHeldCharacter = "2";
+          break;
+        case 60:
+          currentHeldCharacter = "3";
+          break;
+        case 61:
+          currentHeldCharacter = "4";
+          break;
+        case 62:
+          currentHeldCharacter = "5";
+          break;
+        case 63:
+          currentHeldCharacter = "6";
+          break;
+        case 64:
+          currentHeldCharacter = "7";
+          break;
+        case 65:
+          currentHeldCharacter = "8";
+          break;
+        case 66:
+          currentHeldCharacter = "9";
+          break;
       }
     }
   }
+  console.log(currentCharacter);
+  console.log(currentHeldCharacter);
 }
 
 function changeTextColor() {
@@ -430,29 +460,29 @@ function createScreens(screen) {
     case 9:
       createMenuTitle(8, "Save");
 
-      addText("W - Slot 1", { x: 2, y: 2, color:color`2`});
-      addText("A - Slot 2", { x: 2, y: 3, color:color`2`});
-      addText("S - Slot 3", { x: 2, y: 4, color:color`2`});
-      addText("D - Slot 4", { x: 2, y: 5, color:color`2`});
+      addText("W - Slot 1", { x: 2, y: 2, color: color`2` });
+      addText("A - Slot 2", { x: 2, y: 3, color: color`2` });
+      addText("S - Slot 3", { x: 2, y: 4, color: color`2` });
+      addText("D - Slot 4", { x: 2, y: 5, color: color`2` });
 
-      addText("I - Slot 5", { x: 2, y: 7, color:color`2`});
-      addText("J - Slot 6", { x: 2, y: 8, color:color`2`});
-      addText("K - Slot 7", { x: 2, y: 9, color:color`2`});
-      addText("L - Slot 8", { x: 2, y: 10, color:color`2`});
+      addText("I - Slot 5", { x: 2, y: 7, color: color`2` });
+      addText("J - Slot 6", { x: 2, y: 8, color: color`2` });
+      addText("K - Slot 7", { x: 2, y: 9, color: color`2` });
+      addText("L - Slot 8", { x: 2, y: 10, color: color`2` });
 
       break;
     case 10:
       createMenuTitle(8, "Load");
 
-      addText("W - Slot 1", { x: 2, y: 2, color:color`2`});
-      addText("A - Slot 2", { x: 2, y: 3, color:color`2`});
-      addText("S - Slot 3", { x: 2, y: 4, color:color`2`});
-      addText("D - Slot 4", { x: 2, y: 5, color:color`2`});
+      addText("W - Slot 1", { x: 2, y: 2, color: color`2` });
+      addText("A - Slot 2", { x: 2, y: 3, color: color`2` });
+      addText("S - Slot 3", { x: 2, y: 4, color: color`2` });
+      addText("D - Slot 4", { x: 2, y: 5, color: color`2` });
 
-      addText("I - Slot 5", { x: 2, y: 7, color:color`2`});
-      addText("J - Slot 6", { x: 2, y: 8, color:color`2`});
-      addText("K - Slot 7", { x: 2, y: 9, color:color`2`});
-      addText("L - Slot 8", { x: 2, y: 10, color:color`2`});
+      addText("I - Slot 5", { x: 2, y: 7, color: color`2` });
+      addText("J - Slot 6", { x: 2, y: 8, color: color`2` });
+      addText("K - Slot 7", { x: 2, y: 9, color: color`2` });
+      addText("L - Slot 8", { x: 2, y: 10, color: color`2` });
 
       break;
   }
@@ -465,14 +495,14 @@ function createMenuTitle(x, text) {
 
 function loadMatrix() {
   for (let y = 0; y < 15; y++) {
-      for (let x = 0; x < 16; x++) {
-        if (x === MATRIX_X && y === MATRIX_Y) {
-          addText("/", { x: x + 2, y, color: textColor });
-        } else {
-          addText(matrix[y][x], { x: x + 2, y, color: colorMatrix[y][x] });
-        }
+    for (let x = 0; x < 16; x++) {
+      if (x === MATRIX_X && y === MATRIX_Y) {
+        addText("/", { x: x + 2, y, color: textColor });
+      } else {
+        addText(matrix[y][x], { x: x + 2, y, color: colorMatrix[y][x] });
       }
     }
+  }
 }
 
 function handleInput(input) {
@@ -501,12 +531,11 @@ function handleInput(input) {
           currentScreen = 2;
           break;
         case 9:
-          MATRIX_SAVES[0] = matrixToString(matrix);
+          saveFile(0);
           currentScreen = 1;
           break;
         case 10:
-          matrix = stringToMatrix(MATRIX_SAVES[0]);
-          resetColorMatrix();
+          loadFile(0);
           currentScreen = 2;
           break;
       }
@@ -533,6 +562,14 @@ function handleInput(input) {
         case 8:
           matrix = stringToMatrix(SAMPLES[0]);
           resetColorMatrix();
+          currentScreen = 2;
+          break;
+        case 9:
+          saveFile(1);
+          currentScreen = 1;
+          break;
+        case 10:
+          loadFile(1);
           currentScreen = 2;
           break;
       }
@@ -575,6 +612,14 @@ function handleInput(input) {
           resetColorMatrix();
           currentScreen = 2;
           break;
+        case 9:
+          saveFile(2);
+          currentScreen = 1;
+          break;
+        case 10:
+          loadFile(2);
+          currentScreen = 2;
+          break;
       }
       break;
     case "d":
@@ -598,6 +643,14 @@ function handleInput(input) {
         case 8:
           matrix = stringToMatrix(SAMPLES[0]);
           resetColorMatrix();
+          currentScreen = 2;
+          break;
+        case 9:
+          saveFile(3);
+          currentScreen = 1;
+          break;
+        case 10:
+          loadFile(3);
           currentScreen = 2;
           break;
       }
@@ -624,6 +677,14 @@ function handleInput(input) {
           resetColorMatrix();
           currentScreen = 2;
           break;
+        case 9:
+          saveFile(4);
+          currentScreen = 1;
+          break;
+        case 10:
+          loadFIle(4);
+          currentScreen = 2;
+          break;
       }
       break;
     case "j":
@@ -633,7 +694,7 @@ function handleInput(input) {
           break;
         case 2:
           if (currentCharacter == 1) {
-            currentCharacter = 56;
+            currentCharacter = 66;
           } else {
             currentCharacter--;
           }
@@ -647,6 +708,14 @@ function handleInput(input) {
         case 8:
           matrix = stringToMatrix(SAMPLES[0]);
           resetColorMatrix();
+          currentScreen = 2;
+          break;
+        case 9:
+          saveFile(5);
+          currentScreen = 1;
+          break;
+        case 10:
+          loadFile(5);
           currentScreen = 2;
           break;
       }
@@ -666,6 +735,14 @@ function handleInput(input) {
           resetColorMatrix();
           currentScreen = 2;
           break;
+        case 9:
+          saveFile(6);
+          currentScreen = 1;
+          break;
+        case 10:
+          loadFile(6);
+          currentScreen = 2;
+          break;
       }
       break;
     case "l":
@@ -674,7 +751,7 @@ function handleInput(input) {
           currentScreen = 10;
           break;
         case 2:
-          if (currentCharacter == 56) {
+          if (currentCharacter == 66) {
             currentCharacter = 1;
           } else {
             currentCharacter++;
@@ -689,6 +766,14 @@ function handleInput(input) {
         case 8:
           matrix = stringToMatrix(SAMPLES[0]);
           resetColorMatrix();
+          currentScreen = 2;
+          break;
+        case 9:
+          saveFile(7);
+          currentScreen = 1;
+          break;
+        case 10:
+          loadFile(7);
           currentScreen = 2;
           break;
       }
@@ -726,14 +811,14 @@ function resetColorMatrix() {
 }
 
 function matrixToString(matrix) {
-    let result = "";
-    for (let row of matrix) {
-        result += row.join("") + "\n";
-    }
-    return result.trim(); // Trim to remove trailing newline at the end
+  let result = "";
+  for (let row of matrix) {
+    result += row.join("") + "\n";
+  }
+  return result.trim(); // Trim to remove trailing newline at the end
 }
 
-function colorMatrixToArray(colorMatrix) {
+function matrixToColor(colorMatrix) {
   const array = [];
   for (let row of colorMatrix) {
     for (let col of row) {
@@ -743,6 +828,15 @@ function colorMatrixToArray(colorMatrix) {
   return array;
 }
 
+function saveFile(num) {
+  MATRIX_SAVES[num] = matrixToString(matrix);
+  MATRIX_COLOR[num] = matrixToColor(colorMatrix);
+}
+
+function loadFile(num) {
+  matrix = stringToMatrix(MATRIX_SAVES[num]);
+  colorMatrix = stringToMatrix(MATRIX_COLOR[num]);
+}
 
 onInput("w", () => { handleInput("w"); });
 onInput("a", () => { handleInput("a"); });
