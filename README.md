@@ -1,4 +1,4 @@
-# Sprig-Edit 0.2.2
+# Sprig-Edit 0.2.4
 
 Introducing Sprig-Edit, a simple text editor for Sprig. Sprig-Edit supports 56 different characters, and also supports color. It uses a 16x15 grid to create words and sentences.
 
