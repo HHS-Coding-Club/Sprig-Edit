@@ -80,7 +80,7 @@ const SPRIG_EDIT = {
   VERSION: {
     MAJOR: 0,
     MINOR: 2,
-    PATCH: 3,
+    PATCH: 4,
   },
   VERSION_NAME: "Phantom"
 };
