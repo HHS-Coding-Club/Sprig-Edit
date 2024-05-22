@@ -16,6 +16,16 @@ S  - Space
 W  - Change Color
 */
 
+/*
+  Hi there! This is a development version of Sprig Edit! Meaning, it's not quite finished yet.
+  There are prone to be a lot of bugs, and it's not quite as polished as I'd like it to be.
+
+  If you want to use the current version of Sprig Edit, you can find it in the root directory of this repo, in the file sprig-edit.js.
+
+  Thanks,
+  - Colack
+*/
+
 const player = "p";
 
 var matrix = Array.from({ length: 15 }, () => Array(16).fill(" "));
@@ -59,6 +69,8 @@ const BACKGROUND_BLACK = "B";
 const BACKGROUND_DGREY = "D";
 const BACKGROUND_LGREY = "G";
 
+const COLORS = [color`3`, color`9`, color`6`, color`4`, color`7`, color`2`];
+
 const LOGO_1 = "1";
 const LOGO_2 = "2";
 const LOGO_3 = "3";
@@ -79,10 +91,10 @@ var currentScreen = 0;
 const SPRIG_EDIT = {
   VERSION: {
     MAJOR: 0,
-    MINOR: 2,
-    PATCH: 4,
+    MINOR: 3,
+    PATCH: 0,
   },
-  VERSION_NAME: "Phantom"
+  VERSION_NAME: "Whims"
 };
 
 setLegend(
@@ -288,92 +300,30 @@ const levels = [
 ................`
 ];
 
-function changeCharacter() {
-  if (currentCharacter >= 1 && currentCharacter <= 66) {
-    if (currentCharacter <= 26) {
-      currentHeldCharacter = String.fromCharCode(currentCharacter + 96);
-    } else if (currentCharacter <= 52) {
-      currentHeldCharacter = String.fromCharCode(currentCharacter + 64 - 26);
+const changeCharacter = (currentCharacter) => {
+  const charCode = currentCharacter;
+  if (charCode >= CHAR_START && charCode <= CHAR_END) {
+    if (charCode <= 26) {
+      currentHeldCharacter = String.fromCharCode(charCode + 96);
+    } else if (charCode <= 52) {
+      currentHeldCharacter = String.fromCharCode(charCode + 64 - 26);
     } else {
-      switch (currentCharacter) {
-        case 53:
-          currentHeldCharacter = "!";
-          break;
-        case 54:
-          currentHeldCharacter = ".";
-          break;
-        case 55:
-          currentHeldCharacter = "?";
-          break;
-        case 56:
-          currentHeldCharacter = ",";
-          break;
-        case 57:
-          currentHeldCharacter = "0";
-          break;
-        case 58:
-          currentHeldCharacter = "1";
-          break;
-        case 59:
-          currentHeldCharacter = "2";
-          break;
-        case 60:
-          currentHeldCharacter = "3";
-          break;
-        case 61:
-          currentHeldCharacter = "4";
-          break;
-        case 62:
-          currentHeldCharacter = "5";
-          break;
-        case 63:
-          currentHeldCharacter = "6";
-          break;
-        case 64:
-          currentHeldCharacter = "7";
-          break;
-        case 65:
-          currentHeldCharacter = "8";
-          break;
-        case 66:
-          currentHeldCharacter = "9";
-          break;
-      }
+      const specialChars = ["!", ".", "?", ",", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+      currentHeldCharacter = specialChars[charCode - 53];
     }
   }
-  console.log(currentCharacter);
-  console.log(currentHeldCharacter);
-}
+  console.log(currentCharacter, currentHeldCharacter);
+};
 
-function changeTextColor() {
-  switch (currentColor) {
-    case 0:
-      textColor = color`3`;
-      break;
-    case 1:
-      textColor = color`9`;
-      break;
-    case 2:
-      textColor = color`6`;
-      break;
-    case 3:
-      textColor = color`4`;
-      break;
-    case 4:
-      textColor = color`7`;
-      break;
-    case 5:
-      textColor = color`2`;
-      break;
-  }
-}
+const changeTextColor = () => {
+  textColor = COLORS[currentColor];
+};
 
-function createScreens(screen) {
+const createScreens = (screen) => {
   clearText();
   switch (screen) {
     case 0:
       createMenuTitle(5, "Sprig Edit");
-
       createText(`v${SPRIG_EDIT.VERSION.MAJOR}.${SPRIG_EDIT.VERSION.MINOR}.${SPRIG_EDIT.VERSION.PATCH}`, 7, 4, color`2`);
       createText("Press S To", 5, 7, color`2`);
       createText("Start", 8, 9, color`2`);
@@ -381,20 +331,11 @@ function createScreens(screen) {
       break;
     case 1:
       createMenuTitle(4, "Menu Options");
-
-      createText("W - ChangeLog", 2, 3, color`2`);
-      createText("A - Credits", 2, 4, color`2`);
-      createText("S - Examples", 2, 5, color`2`);
-      createText("D - About", 2, 6, color`2`);
-
-      createText("I - New File", 2, 8, color`2`);
-      createText("J - Controls", 2, 9, color`2`);
-      createText("K - Customize", 2, 10, color`2`);
-      createText("L - Load File", 2, 11, color`2`);
+      ["W - ChangeLog", "A - Credits", "S - Examples", "D - About", " ", "I - New File", "J - Controls", "K - Customize", "L - Load File"]
+        .forEach((text, idx) => createText(text, 2, 3 + idx, color`2`));
       break;
     case 2:
       loadMatrix();
-
       createText("Color", 2, 15, textColor);
       createText(currentHeldCharacter, 8, 15, color`2`);
       createText(`X${MATRIX_X}`, 10, 15, color`2`);
@@ -402,29 +343,16 @@ function createScreens(screen) {
       break;
     case 3:
       createMenuTitle(6, "Credits");
-
-      createText("By Jack S.", 2, 3, color`2`);
-      createText("Testers:", 2, 5, color`2`);
-      createText("- Joe", 2, 6, color`2`);
-      createText("- Nat", 2, 7, color`2`);
-      createText("- Trent", 2, 8, color`2`);
-      createText("- Jared", 2, 9, color`2`);
-      createText("- Phin", 2, 10, color`2`);
-
-      createText("Thanks for using", 2, 14, color`2`);
-      createText("Sprig Edit", 5, 15, color`2`);
+      ["By Jack S.", "", "Testers:", "- Joe", "- Nat", "- Trent", "- Jared", "- Phin", "", "", "Thanks for using", "Sprig Edit"]
+        .forEach((text, idx) => createText(text, 2, 3 + idx, color`2`));
       break;
     case 4:
       createMenuTitle(5, "Change Log");
-
-      createText(`Sprig-Edit ${SPRIG_EDIT.VERSION.MAJOR}.${SPRIG_EDIT.VERSION.MINOR}.${SPRIG_EDIT.VERSION.PATCH}`, 2, 2, color`2`);
-      createText(`${SPRIG_EDIT.VERSION_NAME} Update`, 2, 3, color`2`);
-      createText("Added:", 2, 5, color`2`);
-      createText("- TBD", 2, 6, color`2`);
-      break;
+      [`Sprig-Edit ${SPRIG_EDIT.VERSION.MAJOR}.${SPRIG_EDIT.VERSION.MINOR}.${SPRIG_EDIT.VERSION.PATCH}`, `${SPRIG_EDIT.VERSION_NAME} Update`, "Added:", "- TBD"]
+        .forEach((text, idx) => createText(text, 2, 2 + idx, color`2`));
+      break
     case 5:
       createMenuTitle(6, "Controls");
-
       createText("AD - Move Cursor", 2, 2, color`2`);
       createText("JL - Change Char", 2, 3, color`2`);
       createText("I  - Place Char ", 2, 4, color`2`);
@@ -443,30 +371,13 @@ function createScreens(screen) {
       break;
     case 6:
       createMenuTitle(6, "Examples");
-
-      createText("W - Example Text", 2, 3, color`2`);
-      createText("A - Hello World", 2, 4, color`2`);
-      createText("S - Lorem ipsum", 2, 5, color`2`);
-      createText("D - Welcome", 2, 6, color`2`);
-      createText("I - Thanks", 2, 8, color`2`);
-      createText("J - Program", 2, 9, color`2`);
-      createText("K - Roses", 2, 10, color`2`);
-      createText("L - Princess", 2, 11, color`2`);
+      ["W - Example Text", "A - Hello World", "S - Lorem ipsum", "D - Welcome", "I - Thanks", "J - Program", "K - Roses", "L - Princess"]
+        .forEach((text, idx) => createText(text, 2, 3 + idx, color`2`));
       break;
     case 7:
       createMenuTitle(8, "About");
-
-      createText("Sprig Edit, a si", 2, 3, color`2`);
-      createText("mple text editor", 2, 4, color`2`);
-      createText("for Sprig.", 2, 5, color`2`);
-      createText("It supports 66", 2, 7, color`2`);
-      createText("different charac", 2, 8, color`2`);
-      createText("ters, and color.", 2, 9, color`2`);
-
-      createText("You can find the", 2, 11, color`2`);
-      createText("code at github.c", 2, 12, color`2`);
-      createText("om/colack/sprig-", 2, 13, color`2`);
-      createText("edit!", 2, 14, color`2`);
+      ["Sprig Edit, a si", "mple text editor", "for Sprig.", "It supports 66", "different charac", "ters, and color.", "You can find the", "code at github.c", "om/colack/sprig-", "edit!"]
+        .forEach((text, idx) => createText(text, 2, 3 + idx, color`2`));
       break;
     case 8:
       createMenuTitle(6, "New File");
@@ -491,52 +402,33 @@ function createScreens(screen) {
       break;
     case 9:
       createMenuTitle(8, "Save");
-
-      createText("W - Slot 1", 2, 2, color`2`);
-      createText("A - Slot 2", 2, 3, color`2`);
-      createText("S - Slot 3", 2, 4, color`2`);
-      createText("D - Slot 4", 2, 5, color`2`);
-
-      createText("I - Slot 5", 2, 7, color`2`);
-      createText("J - Slot 6", 2, 8, color`2`);
-      createText("K - Slot 7", 2, 9, color`2`);
-      createText("L - Slot 8", 2, 10, color`2`);
+      ["W - Slot 1", "A - Slot 2", "S - Slot 3", "D - Slot 4", "I - Slot 5", "J - Slot 6", "K - Slot 7", "L - Slot 8"]
+        .forEach((text, idx) => createText(text, 2, 2 + idx, color`2`));
       break;
     case 10:
       createMenuTitle(8, "Load");
-
-      createText("W - Slot 1", 2, 2, color`2`);
-      createText("A - Slot 2", 2, 3, color`2`);
-      createText("S - Slot 3", 2, 4, color`2`);
-      createText("D - Slot 4", 2, 5, color`2`);
-
-      createText("I - Slot 5", 2, 7, color`2`);
-      createText("J - Slot 6", 2, 8, color`2`);
-      createText("K - Slot 7", 2, 9, color`2`);
-      createText("L - Slot 8", 2, 10, color`2`);
+      ["W - Slot 1", "A - Slot 2", "S - Slot 3", "D - Slot 4", "I - Slot 5", "J - Slot 6", "K - Slot 7", "L - Slot 8"]
+        .forEach((text, idx) => createText(text, 2, 2 + idx, color`2`));
       break;
     case 11:
       createMenuTitle(6, "Customize");
-
-      createText("BkGr Color:", 2, 2, color`2`);
-      createText("W - Black", 2, 3, color`2`);
-      createText("A - Dark Grey", 2, 4, color`2`);
-      createText("S - Grey", 2, 5, color`2`);
+      ["BkGr Color:", "W - Black", "A - Dark Grey", "S - Grey"]
+        .forEach((text, idx) => createText(text, 2, 2 + idx, color`2`));
       break;
   }
-}
+};
 
-function createMenuTitle(x, text) {
+const createMenuTitle = (x, text) => {
   createText(text, x, 0, color`2`);
   createText("(==============)", 2, 1, color`2`);
-}
+};
 
-function loadMatrix() {
+const loadMatrix = () => {
   for (let y = 0; y < 15; y++) {
     for (let x = 0; x < 16; x++) {
       if (x === MATRIX_X && y === MATRIX_Y) {
         let newX = x + 2;
-        createText("/", newX, y, textColor);
+        drawCursor(newX, y);
       } else {
         let newX = x + 2;
         createText(matrix[y][x], newX, y, colorMatrix[y][x]);
@@ -561,7 +453,7 @@ function handleInput(input) {
           changeTextColor();
           break;
         case 6:
-          matrix = stringToMatrix(SAMPLES[1]);
+          
           resetColorMatrix();
           currentScreen = 2;
           break;
@@ -624,6 +516,10 @@ function handleInput(input) {
       break;
     case "s":
       switch (currentScreen) {
+        case 3:
+        case 4:
+        case 5:
+        case 7:
         case 0:
           currentScreen = 1;
           setMap(levels[1]);
@@ -644,10 +540,6 @@ function handleInput(input) {
             console.log("EASTER EGG ACTIVATED");
           }
           break;
-        case 3:
-        case 4:
-        case 5:
-        case 7:
         case 6:
           matrix = stringToMatrix(SAMPLES[3]);
           resetColorMatrix();
@@ -833,10 +725,10 @@ function handleInput(input) {
   }
 }
 
-function stringToMatrix(text) {
+/*
+const stringToMatrix = (text) => {
   const matrix = Array.from({ length: 15 }, () => Array(16).fill(' '));
-  let row = 0;
-  let col = 0;
+  let row, col = 0;
 
   for (let i = 0; i < text.length; i++) {
     if (text[i] === '\n') {
@@ -851,18 +743,30 @@ function stringToMatrix(text) {
   }
 
   return matrix;
+};
+*/
+
+const drawCursor = (x, y) => {
+  createText("/", x, y, color`2`);
+};
+
+const clearTiles = () => {
+  for (let y = 0; y < 15; y++) {
+    for (let x = 0; x < 16; x++) {
+      createText(matrix[y][x], x, y, colorMatrix[y][x]);
+    }
+  }
 }
 
-function resetMatrixPositions() {
-  MATRIX_X = 0;
-  MATRIX_Y = 0;
+const resetMatrixPositions = () => {
+  MATRIX_X, MATRIX_Y = 0;
 }
 
-function resetColorMatrix() {
+const resetColorMatrix = () => {
   colorMatrix = Array.from({ length: 15 }, () => Array(16).fill(color`2`));
 }
 
-function matrixToString(matrix) {
+const matrixToString = (matrix) => {
   let result = "";
   for (let row of matrix) {
     result += row.join("") + "\n";
@@ -870,7 +774,7 @@ function matrixToString(matrix) {
   return result.trim();
 }
 
-function matrixToColor(colorMatrix) {
+const matrixToColor = (colorMatrix) => {
   const array = [];
   for (let row of colorMatrix) {
     for (let col of row) {
@@ -880,19 +784,19 @@ function matrixToColor(colorMatrix) {
   return array;
 }
 
-function saveFile(num) {
+const saveFile = (num) => {
   MATRIX_SAVES[num] = matrixToString(matrix);
   MATRIX_COLOR[num] = matrixToColor(colorMatrix);
 }
 
-function loadFile(num) {
+const loadFile = (num) => {
   matrix = stringToMatrix(MATRIX_SAVES[num]);
   colorMatrix = stringToMatrix(MATRIX_COLOR[num]);
 }
 
-function createText(text, x, y, color) {
+const createText = (text, x, y, color) => {
   addText(text, { x: x, y: y, color: color });
-}
+};
 
 onInput("w", () => { handleInput("w"); });
 onInput("a", () => { handleInput("a"); });
