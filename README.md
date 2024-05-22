@@ -36,10 +36,6 @@ Sprig Edit is licensed under the Apache 2.0 License. You can view the license in
 
 Sprig Edit was created by @Colack, with help from many others. The Sprig is a project by Hack Club, and the Sprig Edit project is not affiliated with Hack Club.
 
-Introducing Sprig-Edit, a simple text editor for Sprig. Sprig-Edit supports 56 different characters, and also supports color. It uses a 16x15 grid to create words and sentences.
-
-Sprig-Edit is still in development, and will be updated for the seeable future.
-
 ## Upcoming Features
 
 Sprig-Edit has several features that are either currently in development or are planned to be included in the final release. 
